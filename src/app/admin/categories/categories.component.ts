@@ -43,8 +43,8 @@ export class CategoriesComponent implements OnInit {
 
 
   getCategory(): void {
-    this.commentsService.getAll().subscribe(data => {
-      this.category = data
+    this.commentsService.getAllCategories().subscribe(data => {
+      this.category = data as ComponentsResponse[];
     })
   }
 
@@ -56,9 +56,13 @@ export class CategoriesComponent implements OnInit {
       });
     }
     else {
-      this.commentsService.addAction(this.categoryForn.value).subscribe(() => {
+    /*  this.commentsService.addAction(this.categoryForn.value).subscribe(() => {
+        this.getCategory();
+      });*/
+      this.commentsService.creatCategories(this.categoryForn.value).then(() => {
         this.getCategory();
       });
+
     }
 
     this.edit_status = false;
@@ -81,7 +85,7 @@ export class CategoriesComponent implements OnInit {
 
 
   upload(actionImage: any): void {
- 
+
     const file = actionImage.target.files[0]
     this.loadFIle('icon', file.name, file)
         .then(data => {
@@ -146,4 +150,3 @@ export class CategoriesComponent implements OnInit {
   }
 
 }
- 
